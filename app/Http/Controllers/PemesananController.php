@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PemesananController extends Controller
 {
+    // READ
     public function index(Request $request)
     {
         $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
@@ -19,6 +20,7 @@ class PemesananController extends Controller
         return view('tiket', compact('pemesanans', 'editData'));
     }
 
+    // CREATE
     public function store(Request $request)
     {
         $hargaSatuan = match ($request->kategori_tiket) {
@@ -40,6 +42,7 @@ class PemesananController extends Controller
         return redirect()->route('pembayaran.show', $pemesanan->id);
     }
 
+    // UPDATE
     public function update(Request $request, $id)
     {
         $hargaSatuan = match ($request->kategori_tiket) {
@@ -61,12 +64,14 @@ class PemesananController extends Controller
         return redirect()->route('tiket.index');
     }
 
+    // DELETE
     public function destroy($id)
     {
         Pemesanan::destroy($id);
         return redirect()->route('tiket.index');
     }
 
+    //
     public function pembayaran($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
